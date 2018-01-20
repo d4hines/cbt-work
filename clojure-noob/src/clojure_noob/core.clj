@@ -76,6 +76,7 @@
        (recur (f result (first remaining)) (rest remaining)))))
   ([f [head & tail]]
    (my-reduce f head tail)))
+
 (defn better-symmetrize-body-parts
   "Expects a seq of maps that have a :name and :size"
   [asym-body-parts]
@@ -98,3 +99,25 @@
 (hit asym-hobbit-body-parts)
 (hit asym-hobbit-body-parts)
 (hit asym-hobbit-body-parts)
+
+(let [myVector [{:a "b"} 1 2 2 "b" :a {:a "b"} {:a "c"}]]
+     (set myVector))
+
+(def food-journal
+  [{:month 1 :day 1 :human 5.3 :critter 2.3}
+   {:month 1 :day 2 :human 5.1 :critter 2.0}
+   {:month 2 :day 1 :human 4.9 :critter 2.1}
+   {:month 2 :day 2 :human 5.0 :critter 2.5}
+   {:month 3 :day 1 :human 4.2 :critter 3.3}
+   {:month 3 :day 2 :human 4.0 :critter 3.8}
+   {:month 4 :day 1 :human 3.7 :critter 3.9}
+   {:month 4 :day 2 :human 3.7 :critter 3.6}])
+
+(defn length [array]
+  (reduce (fn [length currEl] (+ length 1))
+    0
+    array))
+
+(def afterFeb (drop-while #(< (:month %) 2) food-journal))
+(length afterFeb)
+(length (take-while #(< (:month %) 4) (drop-while #(< (:month %) 2) food-journal)))
